@@ -1,0 +1,11 @@
+.venv/
+.env
+__pycache__/
+frontend/node_modules/
+frontend/dist/
+
+# local-only files
+SKILL (1).md
+outputs/
+.claude/
+frontend/chatbot icon.jpg
