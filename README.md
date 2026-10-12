@@ -81,6 +81,17 @@ http://localhost:8010/report?company=MSFT).
 While changing the front end, also run `npm run dev` in `frontend/` and open http://localhost:5173;
 it forwards `/api` calls to the backend on port 8010.
 
+## Deploy to Hugging Face Spaces
+The `Dockerfile` builds the React app and serves it from FastAPI on port 7860, so the whole app runs
+as one free Docker Space.
+```bash
+pip install huggingface_hub
+hf auth login                                   # token with write access: huggingface.co/settings/tokens
+python deploy_to_hf.py <hf-username>/edgar-ai   # uploads the git-tracked files; Hugging Face builds the image
+```
+Then in the Space: **Settings → Variables and secrets → New secret** `GROQ_API_KEY` (and optionally
+`SEC_USER_AGENT`). Free Spaces sleep after a period without visitors and wake on the next visit.
+
 ## Tips
 - The model defaults to `openai/gpt-oss-120b`; set `GROQ_MODEL` in `.env` to change it.
   `qwen/qwen3.8-27b` also passed testing; avoid small models like `allam-2-7b` for tool calling.
