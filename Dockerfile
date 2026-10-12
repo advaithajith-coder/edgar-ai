@@ -1,5 +1,5 @@
 # EDGAR.AI as one container: the React app is built, then served by the FastAPI backend.
-# Used by Hugging Face Spaces (Docker SDK), which expects the app on port 7860.
+# Runs on any Docker host: Render sets $PORT, Hugging Face Spaces expects 7860 (the default).
 
 # ---- 1. build the React front end
 FROM node:22-slim AS web
@@ -29,4 +29,4 @@ USER user
 RUN python -c "import duckdb; duckdb.connect().execute('INSTALL fts')"
 
 EXPOSE 7860
-CMD ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["sh", "-c", "exec uvicorn server:app --host 0.0.0.0 --port ${PORT:-7860}"]

@@ -1,0 +1,13 @@
+# Render Blueprint: one free Docker web service running EDGAR.AI.
+# In Render: New > Blueprint > pick this repo, then paste GROQ_API_KEY when asked.
+services:
+  - type: web
+    name: edgar-ai
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false   # secret: entered in the Render dashboard, never stored in the repo
+      - key: SEC_USER_AGENT
+        sync: false   # optional, e.g. "Your Name your@email.com"
