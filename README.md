@@ -6,6 +6,10 @@ quotes from the filing, and shows exactly how each answer was calculated.
 
 Built with a LangChain agent on a Groq-hosted LLM, DuckDB, FastAPI and React.
 
+**Live demo: [edgar-ai.onrender.com](https://edgar-ai.onrender.com/)** (free hosting: if it's been idle,
+the first visit takes 30–60 seconds to wake up). Try it with Microsoft:
+[edgar-ai.onrender.com/report?company=MSFT](https://edgar-ai.onrender.com/report?company=MSFT)
+
 ![How EDGAR.AI answers a question](demo-screenshots/00-how-edgar-ai-answers.png)
 
 EDGAR.AI isn't handed the whole 10-K. For each question it pulls only what it needs: exact figures from
@@ -85,9 +89,11 @@ it forwards `/api` calls to the backend on port 8010.
 The `Dockerfile` builds the React app and serves it from FastAPI as one container (about 125–175 MB of
 memory), listening on `$PORT` (default 7860).
 
-**Render (free):** in the Render dashboard choose **New → Blueprint**, pick this repo, and paste your
-`GROQ_API_KEY` when asked; `render.yaml` sets up a free Docker web service. Free services sleep after
-about 15 minutes idle, so the first visit after a break takes 30–60 seconds.
+**Render (free), used for the [live demo](https://edgar-ai.onrender.com/):** in the Render dashboard choose
+**New → Web Service**, pick this repo (Render detects the `Dockerfile`), choose the **Free** instance type and
+add the `GROQ_API_KEY` environment variable (optionally `SEC_USER_AGENT`). Or use **New → Blueprint**, which
+reads `render.yaml`. Every push to `main` redeploys automatically. Free services sleep after about
+15 minutes idle, so the first visit after a break takes 30–60 seconds.
 
 **Hugging Face Spaces (needs PRO for Docker Spaces):**
 ```bash
